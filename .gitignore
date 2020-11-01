@@ -114,3 +114,6 @@ dist
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+#rabbitmq
+Rabbitmq/data
+Rabbitmq/logs

@@ -1,12 +1,45 @@
-version: "3.6"
+version: "3.8"
 services:
   goservice:
     build: "./Go"
+    container_name: goservice
     ports:
       - "8080"
+
+  flaskapp:
+    build: "./Python"
+    container_name: flaskapp
+    volumes:
+      - .:/opt/services/flaskapp/src
+    networks:
+      - web_nw
+
   nginx:
     build: "./nginx"
     ports:
-      - "80:80"
-    depends_on:
-      - "goservice"
+      - "8080:80"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d
+    networks:
+      - web_nw
+    depends_on: 
+      - flaskapp
+      - goservice
+      
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    hostname: my-rabbit
+    volumes:
+      - ./Rabbitmq/etc/definitions.json:/etc/rabbitmq/definitions.json
+      - ./Rabbitmq/etc/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+      - ./Rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+      - ./Rabbitmq/logs:/var/log/rabbitmq/log
+    ports:
+      - 5672:5672
+      - 15672:15672
+networks:
+  web_nw:
+    driver: bridge
+volumes:
+  dbdata:
