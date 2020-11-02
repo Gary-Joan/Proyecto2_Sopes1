@@ -3,8 +3,11 @@ services:
   goservice:
     build: "./Go"
     container_name: goservice
+    restart: always
     ports:
-      - "8080"
+      - "8080:8080"
+    depends_on: 
+      - rabbitmq
 
   flaskapp:
     build: "./Python"

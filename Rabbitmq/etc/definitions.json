@@ -3,22 +3,10 @@
     "rabbitmq_version": "3.8.3",
     "users": [
       {
-        "name": "ops1",
-        "password_hash": "sOD2Ib17c/ZW9PiMDKZXvoHlBcWirR0lF/+vTOTOy/t7QSuL",
-        "hashing_algorithm": "rabbit_password_hashing_sha256",
-        "tags": ""
-      },
-      {
         "name": "admin",
         "password_hash": "ZdETL0pgo3iUOn/shv9QhBl3T98wMsLu2/5GfIL2fjbpPgMM",
         "hashing_algorithm": "rabbit_password_hashing_sha256",
         "tags": "administrator"
-      },
-      {
-        "name": "ops0",
-        "password_hash": "xynNraNzjBRvH9LkLRtnvHZW91dRw3EbDUMdxAVkxj9wSBEC",
-        "hashing_algorithm": "rabbit_password_hashing_sha256",
-        "tags": ""
       }
     ],
     "vhosts": [{ "name": "/" }],
@@ -29,37 +17,9 @@
         "configure": ".*",
         "write": ".*",
         "read": ".*"
-      },
-      {
-        "user": "ops0",
-        "vhost": "/",
-        "configure": "",
-        "write": "logs*",
-        "read": ".*"
-      },
-      {
-        "user": "ops1",
-        "vhost": "/",
-        "configure": "",
-        "write": "",
-        "read": "mytest"
       }
     ],
     "topic_permissions": [
-      {
-        "user": "ops0",
-        "vhost": "/",
-        "exchange": "logs",
-        "write": ".*",
-        "read": ".*"
-      },
-      {
-        "user": "ops1",
-        "vhost": "/",
-        "exchange": "logs",
-        "write": "order.*",
-        "read": "order.*"
-      },
       {
         "user": "admin",
         "vhost": "/",
