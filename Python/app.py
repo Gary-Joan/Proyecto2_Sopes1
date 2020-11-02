@@ -6,16 +6,9 @@ import requests
 from json import loads,  dumps
 app = Flask(__name__)
 
-
-
-
-
-@app.route('/')
-def hello():
-    return "<h2>SERVIDOR 2</h2>"
-
-
+bod =""
 def main():
+
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
 
@@ -23,18 +16,19 @@ def main():
 
     def callback(ch, method, properties, body):
         print(" [x] Recibido %r" % body.decode())
+        bod= body.decode()
 
     channel.basic_consume(queue='Case', on_message_callback=callback, auto_ack=True)
 
     print(' [*] Esperando mensajes. Presione CTRL+C para terminar')
+    print(bod)
     channel.start_consuming()
 
     
 
 if __name__ == '__main__':
     try:
-        main()
-        
+        main()        
     except KeyboardInterrupt:
         print('Finalizo Programa')
         try:
