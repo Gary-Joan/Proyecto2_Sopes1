@@ -21,6 +21,7 @@ services:
       - "80:80"
     depends_on: 
       - rabbitmq
+      - mongo
     networks:
       - network
 
@@ -51,7 +52,21 @@ services:
       - "15672:15672"
     networks: 
       - network
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks: 
+      - network
+  
 networks:
   network: {}
 volumes:
   dbdata:
+  mongodb_data_container:

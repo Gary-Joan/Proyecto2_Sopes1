@@ -37,7 +37,7 @@ func CrearCaso(w http.ResponseWriter, r *http.Request) {
         panic(err)
 	}
 	// Do something with the Person struct...
-	var jsonStr = []byte(`{"name":"` + c.Name + `","location":"` + c.Location +`,"age":`+strconv.Itoa(c.Age)+`,"infectedtype":"`+c.Infectedtype+`","state":"`+c.State+ `"}`)
+	var jsonStr = []byte(`{"name":"` + c.Name + `","location":"` + c.Location +`","age":`+strconv.Itoa(c.Age)+`,"infectedtype":"`+c.Infectedtype+`","state":"`+c.State+ `"}`)
 	
 
 

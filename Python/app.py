@@ -1,27 +1,35 @@
 #!/usr/bin/env python
-import pika, sys, os
+import pika, sys
 import os
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 import requests
 from json import loads,  dumps
+from pymongo import MongoClient
 app = Flask(__name__)
 
 bod =""
-def main():
+def callback(ch, method, properties, body):
+        print(" [x] Recibido %r" % body.decode())
+        myclient = MongoClient('mongodb://mongo:27017/',username='root',password='rootpassword')
+        mydb = myclient["mydb"]
+        mycol = mydb["casos"]
+        mydict = { "name": "Peter", "address": "Lowstreet 27" }
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+        x = mycol.insert_one(loads(body.decode()))            
+def main(): 
+    
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     channel = connection.channel()
 
     channel.queue_declare(queue='Case')
 
-    def callback(ch, method, properties, body):
-        print(" [x] Recibido %r" % body.decode())
-        bod= body.decode()
+
+
 
     channel.basic_consume(queue='Case', on_message_callback=callback, auto_ack=True)
 
     print(' [*] Esperando mensajes. Presione CTRL+C para terminar')
-    print(bod)
+  
     channel.start_consuming()
 
     
