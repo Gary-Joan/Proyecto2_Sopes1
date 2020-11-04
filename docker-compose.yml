@@ -4,6 +4,8 @@ services:
     build: "./Go"
     container_name: goservice
     restart: always
+    volumes: 
+      - ./Go:/app/
     ports:
       - "8080:8080"
     depends_on: 
@@ -16,7 +18,7 @@ services:
     container_name: flaskapp
     restart: always
     volumes:
-      - .:/opt/services/flaskapp/src
+      - ./Python:/project
     ports: 
       - "80:80"
     depends_on: 
@@ -62,6 +64,14 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
+    networks: 
+      - network
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    ports: 
+      - 6379:6379
     networks: 
       - network
   
