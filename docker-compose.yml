@@ -1,5 +1,6 @@
 version: "3.8"
 services:
+  ############# Servidor Go con rabbitmq ###############
   goservice:
     build: "./Go"
     container_name: goservice
@@ -12,7 +13,32 @@ services:
       - rabbitmq
     networks: 
       - network
-
+#################### Servidor de go con grpc ########################
+  gogrpc:
+    build: "./Go_grpc"
+    container_name: gogrpc
+    restart: always
+    volumes: 
+      - ./Go_grpc:/app/
+    ports:
+      - "8081:8081"
+    networks: 
+      - network
+#################### Servidor de python con grpc ########################
+  pythongrpc:
+    build: "./Python-grpc"
+    container_name: pythongrpc
+    restart: always
+    volumes:
+      - ./Python-grpc:/project
+    ports: 
+      - "81:81"
+    depends_on: 
+      - mongo
+      - redis
+    networks:
+      - network
+ #################### Servidor de python con rabbitmq ########################
   flaskapp:
     build: "./Python"
     container_name: flaskapp
@@ -24,6 +50,7 @@ services:
     depends_on: 
       - rabbitmq
       - mongo
+      - redis
     networks:
       - network
 
@@ -38,7 +65,7 @@ services:
   #   depends_on: 
   #     - flaskapp
   #     - goservice
-      
+  ####################### Servidor de rabbitmq ###########################  
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -54,6 +81,7 @@ services:
       - "15672:15672"
     networks: 
       - network
+  ################## base de datos en mongo #################
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -66,6 +94,7 @@ services:
       - mongodb_data_container:/data/db
     networks: 
       - network
+  ################### base de datos en redis ########################
   redis:
     image: redis
     container_name: redis
