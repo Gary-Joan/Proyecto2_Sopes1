@@ -1,5 +1,6 @@
-FROM python:3.6.1-alpine
+FROM python:latest
 WORKDIR /project
 ADD . /project
 RUN pip install -r requirements.txt
+EXPOSE 81
 CMD ["python","app.py"]

@@ -46,7 +46,7 @@ services:
     volumes:
       - ./Python:/project
     ports: 
-      - "80:80"
+      - "82:82"
     depends_on: 
       - rabbitmq
       - mongo
