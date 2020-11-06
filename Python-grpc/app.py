@@ -22,9 +22,9 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         mycol = mydb["casos"]
         x = mycol.insert_one(loads(request.name)) 
         ## enviamos a redis
-        redisc = redis.StrictRedis(host='redis', port=6379,db=0,charset="utf-8", decode_responses=True)
-        parsed = loads(request.name)
-        redisc.rpush('casos', str(parsed))
+        #redisc = redis.StrictRedis(host='redis', port=6379,db=0,charset="utf-8", decode_responses=True)
+        #parsed = loads(request.name)
+        #redisc.rpush('casos', str(parsed))
 
         return helloworld_pb2.HelloReply(message = 'hola %s'%request.name)
                    
@@ -33,15 +33,12 @@ def main():
     helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    server.wait_for_termination()
-    
-
-    
+    server.wait_for_termination()  
 
 if __name__ == '__main__':
     try:
-        logging.basicConfig()
-        main()        
+        logging.basicConfig()  
+        main()    
     except KeyboardInterrupt:
         print('Finalizo Programa')
         try:

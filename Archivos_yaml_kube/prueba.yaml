@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gogrpc
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gogrpc
+  template:
+    metadata:
+      labels:
+        app: gogrpc
+    spec:
+      containers:
+      - image: garyjoan14/gogrpc:1.0
+        name: go
+        ports:
+        - containerPort: 8081
+      restartPolicy: Always
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gogrpc-svc
+  namespace: project
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
+  selector:
+    app: gogrpc
+---
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: nginx-ingress
+    namespace: project
+  spec:
+    rules:
+      - http:
+            paths:
+              - backend:
+                  serviceName: gogrpc-svc
+                  servicePort: 80
+                path: /
+---
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: gloo
+    name: gloo-ingress
+    namespace: project
+  spec:
+    rules:
+      - http:
+            paths:
+              - backend:
+                  serviceName: gogrpc-svc
+                  servicePort: 80
+                path: /
+

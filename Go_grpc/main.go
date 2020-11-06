@@ -43,17 +43,16 @@ func CrearCaso(w http.ResponseWriter, r *http.Request) {
 	//grpc
 	conn, err := grpc.Dial(address, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
-        log.Fatal("no se conecto: %w",err)
+        log.Fatal("no se conecto: ",err)
 	}
 	defer conn.Close()
 	ca := pb.NewGreeterClient(conn)
-	//strjson := jsonStr
 	ctx, cancel := context.WithTimeout(context.Background(),time.Second)
 	defer cancel()
 	//enviando 
 	ra, error := ca.SayHello(ctx, &pb.HelloRequest{Name: jsonStr})
 	if error != nil{
-		log.Fatal("error al enviar el mensaje: %w ",error)
+		log.Fatal("error al enviar el mensaje: ",error)
 	}
 	log.Printf("respuesta: %s", ra.GetMessage())
 

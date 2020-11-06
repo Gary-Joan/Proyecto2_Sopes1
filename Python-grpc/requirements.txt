@@ -1,5 +1,5 @@
 flask
-pymongo
+pymongo[tls,srv]
 redis
 grpcio
 grpcio-tools
