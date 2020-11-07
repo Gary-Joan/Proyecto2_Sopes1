@@ -1,5 +1,7 @@
 flask
 requests
-pika
+dnspython
 pymongo
+pymongo[tls,srv]
+pika
 redis

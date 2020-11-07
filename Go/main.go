@@ -45,7 +45,7 @@ func CrearCaso(w http.ResponseWriter, r *http.Request) {
 
 
 	//Enviando a Rabbitmq
-	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq/")
+	conn, err := amqp.Dial("amqp://guest:guest@mu-rabbit-rabbitmq.project.svc.cluster.local:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
 
@@ -92,7 +92,7 @@ func main() {
 	router := mux.NewRouter()
     router.HandleFunc("/caso", CrearCaso).Methods("POST")
 	router.HandleFunc("/", DoHealthCheck).Methods("GET")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Fatal(http.ListenAndServe(":8082", router))
 
 	
 }

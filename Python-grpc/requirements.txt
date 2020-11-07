@@ -1,4 +1,5 @@
 flask
+dnspython
 pymongo
 pymongo[tls,srv]
 redis

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gogrpc
+  name: dev-grpc
   namespace: project
 spec:
   replicas: 1
@@ -14,12 +14,19 @@ spec:
         app: gogrpc
     spec:
       containers:
-      - image: garyjoan14/gogrpc:1.0
+      - image: garyjoan14/gogrpc:1.1
         name: go
         ports:
         - containerPort: 8081
+      - image: garyjoan14/pythongrpc:1.4
+        name: pythongrpc
+        ports:
+        - containerPort: 81
+      - image: redis
+        name: redis
+        ports:
+        - containerPort: 6379
       restartPolicy: Always
-
 
 ---
 apiVersion: v1
@@ -35,7 +42,6 @@ spec:
   selector:
     app: gogrpc
 ---
-
   apiVersion: extensions/v1beta1
   kind: Ingress
   metadata:
@@ -49,23 +55,7 @@ spec:
             paths:
               - backend:
                   serviceName: gogrpc-svc
-                  servicePort: 80
+                  servicePort: 8081
                 path: /
----
 
-  apiVersion: extensions/v1beta1
-  kind: Ingress
-  metadata:
-    annotations:
-      kubernetes.io/ingress.class: gloo
-    name: gloo-ingress
-    namespace: project
-  spec:
-    rules:
-      - http:
-            paths:
-              - backend:
-                  serviceName: gogrpc-svc
-                  servicePort: 80
-                path: /
 

@@ -27,7 +27,7 @@ type caso struct {
 }
 
 const (
-	address = "pythongrpc:50051"
+	address = "localhost:50051"
 )
 func CrearCaso(w http.ResponseWriter, r *http.Request) {
 	body, err := ioutil.ReadAll(r.Body)

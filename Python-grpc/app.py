@@ -17,15 +17,22 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
     def SayHello(self,request,context):
         print("mensaje: %s!" % request.name )
         ## enviamos a mongo
-        myclient = MongoClient('mongodb://mongo:27017/',username='root',password='rootpassword')
+        uri = "mongodb+srv://Admin:admin@cluster0.etlwp.mongodb.net/mydb?retryWrites=true&w=majority"
+        myclient = MongoClient(uri)
         mydb = myclient["mydb"]
         mycol = mydb["casos"]
         x = mycol.insert_one(loads(request.name)) 
         ## enviamos a redis
-        #redisc = redis.StrictRedis(host='redis', port=6379,db=0,charset="utf-8", decode_responses=True)
+        #redisc = redis.StrictRedis(host='localhost', port=6379,db=0,charset="utf-8", decode_responses=True)
         #parsed = loads(request.name)
         #redisc.rpush('casos', str(parsed))
-
+        redisc = redis.Redis(
+                        host='redis-16236.c238.us-central1-2.gce.cloud.redislabs.com',
+                        port=16236,
+                        password='aLUBDXvzv6pQVkyD5TGznWLGNdtbWFqJ')
+        print(redisc)
+        parsed = loads(request.name)
+        redisc.rpush('casos', str(parsed))
         return helloworld_pb2.HelloReply(message = 'hola %s'%request.name)
                    
 def main():
