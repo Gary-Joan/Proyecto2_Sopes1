@@ -14,11 +14,11 @@ spec:
         app: gorabbit
     spec:
       containers:
-      - image: garyjoan14/gorabbit:1.7
+      - image: garyjoan14/gorabbit:1.0.0
         name: gor
         ports:
         - containerPort: 8082
-      - image: garyjoan14/pythonrabbit:1.2
+      - image: garyjoan14/pythonrabbit:1.0.1
         name: pythonrabbit
         ports:
         - containerPort: 82

@@ -46,11 +46,11 @@ func CrearCaso(w http.ResponseWriter, r *http.Request) {
 
 	//Enviando a Rabbitmq
 	conn, err := amqp.Dial("amqp://guest:guest@mu-rabbit-rabbitmq.project.svc.cluster.local:5672/")
-	failOnError(err, "Failed to connect to RabbitMQ")
+	failOnError(err, "Fallo al conectar con RabbitMQ")
 	defer conn.Close()
 
 	ch, err := conn.Channel()
-	failOnError(err, "Failed to open a channel")
+	failOnError(err, "Fallo para abrir un canal a rabbitmq.")
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
@@ -61,7 +61,7 @@ func CrearCaso(w http.ResponseWriter, r *http.Request) {
 		false,   // no-wait
 		nil,     // arguments
 	)
-	failOnError(err, "Failed to declare a queue")
+	failOnError(err, "Error fallo crear encolador.")
 
 	//body := "Hello World!"
 	err = ch.Publish(
@@ -90,7 +90,7 @@ func main() {
 	//rutas del servidor
 
 	router := mux.NewRouter()
-    router.HandleFunc("/caso", CrearCaso).Methods("POST")
+    router.HandleFunc("/NewCaso", CrearCaso).Methods("POST")
 	router.HandleFunc("/", DoHealthCheck).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8082", router))
 
@@ -98,5 +98,5 @@ func main() {
 }
 
 func DoHealthCheck(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Servidor GOLAND ENCENDIDO!!!")
+	fmt.Fprintf(w, "Servidor GOLAND con Rabbitmq!!!")
 }

@@ -14,18 +14,14 @@ spec:
         app: gogrpc
     spec:
       containers:
-      - image: garyjoan14/gogrpc:1.1
+      - image: garyjoan14/gogrpc:1.0.0
         name: go
         ports:
         - containerPort: 8081
-      - image: garyjoan14/pythongrpc:1.4
+      - image: garyjoan14/pythongrpc:1.0.0
         name: pythongrpc
         ports:
         - containerPort: 81
-      - image: redis
-        name: redis
-        ports:
-        - containerPort: 6379
       restartPolicy: Always
 
 ---
@@ -37,8 +33,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8081
+      port: 8081
   selector:
     app: gogrpc
 ---
@@ -46,16 +41,16 @@ spec:
   kind: Ingress
   metadata:
     annotations:
-      kubernetes.io/ingress.class: nginx
-    name: nginx-ingress
+      kubernetes.io/ingress.class: gloo
+    name: gloo-ingress
     namespace: project
   spec:
     rules:
-      - http:
-            paths:
-              - backend:
-                  serviceName: gogrpc-svc
-                  servicePort: 8081
-                path: /
+     - http:
+        paths:
+        - path: /.*
+          backend:
+            serviceName: gogrpc-svc
+            servicePort: 8081
 
 

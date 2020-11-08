@@ -20,12 +20,11 @@ def callback(ch, method, properties, body):
         x = collection.insert_one(loads(body.decode()))
         print(x)
         #insercion base de datos redis
-        #redisc = redis.StrictRedis(host='localhost', port=6379,db=0,charset="utf-8", decode_responses=True)
-        #parsed = loads(body.decode())
-        #redisc.rpush('casos', str(parsed))
-
-        #recuperado = redis.mget('caso')
-        #print ("tipo de variable de recuperado: "+str(recuperado))
+        pool = redis.ConnectionPool(host="34.69.11.162", port=6379, password="admin",db=0,decode_responses=True)
+        r = redis.Redis(connection_pool=pool)
+        parsed = loads(body.decode())
+        string_json="\'"+str(parsed)+"\'"
+        r.lpush('casos', string_json)
 
                    
 def main(): 

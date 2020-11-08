@@ -22,18 +22,15 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         mydb = myclient["mydb"]
         mycol = mydb["casos"]
         x = mycol.insert_one(loads(request.name)) 
-        ## enviamos a redis
-        #redisc = redis.StrictRedis(host='localhost', port=6379,db=0,charset="utf-8", decode_responses=True)
-        #parsed = loads(request.name)
-        #redisc.rpush('casos', str(parsed))
-        redisc = redis.Redis(
-                        host='redis-16236.c238.us-central1-2.gce.cloud.redislabs.com',
-                        port=16236,
-                        password='aLUBDXvzv6pQVkyD5TGznWLGNdtbWFqJ')
-        print(redisc)
+        # enviamos a redis
+        pool = redis.ConnectionPool(host="34.69.11.162", port=6379, password="admin",db=0,decode_responses=True)
+        r = redis.Redis(connection_pool=pool)
         parsed = loads(request.name)
-        redisc.rpush('casos', str(parsed))
-        return helloworld_pb2.HelloReply(message = 'hola %s'%request.name)
+        string_json="\'"+str(parsed)+"\'"
+        r.lpush('casos', string_json)
+        #print(parsed)
+
+        return helloworld_pb2.HelloReply(message = 'Enviado caso: %s'%request.name)
                    
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
