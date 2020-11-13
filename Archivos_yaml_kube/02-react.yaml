@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-node
+  namespace: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - image: joseandresrp/sopes1apinodejs
+        name: apinodejs
+        ports:
+        - containerPort: 5000
+      restartPolicy: Always
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-svc
+  namespace: frontend
+spec:
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 5000
+    selector:
+        app: node
+    type: LoadBalancer    
