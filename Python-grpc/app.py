@@ -26,7 +26,7 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         pool = redis.ConnectionPool(host="34.69.11.162", port=6379, password="admin",db=0,decode_responses=True)
         r = redis.Redis(connection_pool=pool)
         parsed = loads(request.name)
-        string_json="\'"+str(parsed)+"\'"
+        string_json="\""+str(parsed)+"\""
         r.lpush('casos', string_json)
         #print(parsed)
 

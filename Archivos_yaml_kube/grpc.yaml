@@ -4,7 +4,7 @@ metadata:
   name: dev-grpc
   namespace: project
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: gogrpc
@@ -18,7 +18,7 @@ spec:
         name: go
         ports:
         - containerPort: 8081
-      - image: garyjoan14/pythongrpc:1.0.0
+      - image: garyjoan14/pythongrpc:1.0.1
         name: pythongrpc
         ports:
         - containerPort: 81

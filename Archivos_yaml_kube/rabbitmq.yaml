@@ -4,7 +4,7 @@ metadata:
   name: dev-rabbit
   namespace: project
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: gorabbit
@@ -18,7 +18,7 @@ spec:
         name: gor
         ports:
         - containerPort: 8082
-      - image: garyjoan14/pythonrabbit:1.0.1
+      - image: garyjoan14/pythonrabbit:1.0.2
         name: pythonrabbit
         ports:
         - containerPort: 82
