@@ -54,5 +54,5 @@
 
 # Aplicacion final prueba
 
-- www.sopes1proyecto2.tk
+- http://sopes1proyecto2.tk/
 ![alt text](./img/app.jpg)
