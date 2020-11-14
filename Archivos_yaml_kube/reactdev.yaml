@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-react
+  namespace: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+      - image: garyjoan14/reactapp
+        name: react
+        ports:
+        - containerPort: 3000
+      restartPolicy: Always

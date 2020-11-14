@@ -36,12 +36,15 @@ class ChartLast extends Component{
     loadLastCase(){
       fetch('http://35.223.84.133/lastCaso')
       .then(function(response) {
+        
         return response.json();
       })
       .then(data => {
         let newLastCaseData = JSON.parse(data.replaceAll("'","\""));
         console.log(newLastCaseData)
         this.setState({lastCaseData : newLastCaseData})
+      }).catch(function(error) {
+        console.log('No hay mas datos:');
       })
     }
 
