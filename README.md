@@ -21,6 +21,7 @@
 ```
 >>> helm install mu-rabbit stable/rabbitmq --namespace project
 ```
+![alt text](./img/rabbit.jpg)
 # Injeccion a namespsace y pods
 # Instalar linkerd en maquina local(pueden usar choco)
 ```
@@ -50,3 +51,8 @@
 >>> kubectl apple -f -
 ```
 - Esto ejecutara los archivos .yaml en orden como aparecen en la carpeta
+
+# Aplicacion final prueba
+
+- www.sopes1proyecto2.tk
+![alt text](./img/app.jpg)
