@@ -23,7 +23,7 @@ class Greeter(helloworld_pb2_grpc.GreeterServicer):
         mycol = mydb["casos"]
         x = mycol.insert_one(loads(request.name)) 
         # enviamos a redis
-        pool = redis.ConnectionPool(host="34.69.11.162", port=6379, password="admin",db=0,decode_responses=True)
+        pool = redis.ConnectionPool(host="35.202.207.169", port=6379, password="admin",db=0,decode_responses=True)
         r = redis.Redis(connection_pool=pool)
         parsed = loads(request.name)
         string_json="\""+str(parsed)+"\""

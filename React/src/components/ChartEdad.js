@@ -32,7 +32,7 @@ class ChartEdad extends Component{
 
     componentDidMount(){
 		var chart = this.chart;
-		fetch('http://localhost:5000/ageCasos')
+		fetch('http://35.223.84.133/ageCasos')
 		.then(function(response) {
 			return response.json();
 		})

@@ -31,7 +31,7 @@ class ChartTop extends Component{
 
     componentDidMount(){
 		var chart = this.chart;
-		fetch('http://localhost/topCasos')
+		fetch('http://35.223.84.133/topCasos')
 		.then(function(response) {
 			return response.json();
 		})

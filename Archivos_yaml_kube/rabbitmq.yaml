@@ -18,7 +18,7 @@ spec:
         name: gor
         ports:
         - containerPort: 8082
-      - image: garyjoan14/pythonrabbit:1.0.2
+      - image: garyjoan14/pythonrabbit
         name: pythonrabbit
         ports:
         - containerPort: 82

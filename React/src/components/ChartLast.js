@@ -34,7 +34,7 @@ class ChartLast extends Component{
     }
 
     loadLastCase(){
-      fetch('http://localhost/lastCaso')
+      fetch('http://35.223.84.133/lastCaso')
       .then(function(response) {
         return response.json();
       })

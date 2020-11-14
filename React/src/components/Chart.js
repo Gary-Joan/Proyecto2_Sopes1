@@ -32,7 +32,7 @@ class Chart extends Component{
 
     componentDidMount(){
 		var chart = this.chart;
-		fetch('http://localhost:5000/allCasos')
+		fetch('http://35.223.84.133/allCasos')
 		.then(function(response) {
 			return response.json();
 		})

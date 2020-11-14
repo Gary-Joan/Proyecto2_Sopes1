@@ -18,7 +18,7 @@ spec:
         name: go
         ports:
         - containerPort: 8081
-      - image: garyjoan14/pythongrpc:1.0.1
+      - image: garyjoan14/pythongrpc
         name: pythongrpc
         ports:
         - containerPort: 81
